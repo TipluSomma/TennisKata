@@ -13,7 +13,7 @@ namespace Tennis
             this.p2N = player2Name;
         }
 
-        public string GetScore()
+        public string GetGameResult()
         {
             string s;
             if ((p1 < 4 && p2 < 4) && (p1 + p2 < 6))

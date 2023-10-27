@@ -25,7 +25,7 @@ namespace Tennis
                 throw new ArgumentException("Invalid player name.");
         }
 
-        public string GetScore()
+        public string GetGameResult()
         {
             int p1 = player1Score;
             int p2 = player2Score;

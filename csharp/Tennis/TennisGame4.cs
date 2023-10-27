@@ -21,7 +21,7 @@ public class TennisGame4  : ITennisGame
             ReceiverScore += 1;
     }
 
-    public string GetScore()
+    public string GetGameResult()
     {
         TennisResult result = new Deuce(
             this, new GameServer(

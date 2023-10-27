@@ -21,7 +21,7 @@ public class TennisGame6 : ITennisGame
             player2Score++;
     }
 
-    public string GetScore()
+    public string GetGameResult()
     {
         string result;
 

@@ -1,82 +1,112 @@
-namespace Tennis
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Tennis;
+
+public class TennisGame1 : ITennisGame
 {
-    public class TennisGame1 : ITennisGame
+    private readonly Player _firstPlayer;
+    private readonly Player _secondPlayer;
+
+    public TennisGame1(string player1Name, string player2Name)
     {
-        private int m_score1 = 0;
-        private int m_score2 = 0;
-        private string player1Name;
-        private string player2Name;
+        _firstPlayer = new Player(player1Name);
+        _secondPlayer = new Player(player2Name);
+    }
 
-        public TennisGame1(string player1Name, string player2Name)
+    public void WonPoint(string playerName)
+    {
+        var player = GetPlayerByName(playerName);
+
+        if (player == null) return;
+
+        player.Points += 1;
+    }
+
+    public string GetGameResult()
+    {
+        string score = "";
+        int tempScore = 0;
+
+        var pointsFromFirstPlayer = _firstPlayer.Points;
+        
+
+        if (_firstPlayer.Points == _secondPlayer.Points)
         {
-            this.player1Name = player1Name;
-            this.player2Name = player2Name;
+            
+            score = GetEqualScoreDescription(_firstPlayer.Points);
         }
-
-        public void WonPoint(string playerName)
+        else if (m_score1 >= 4 || m_score2 >= 4)
         {
-            if (playerName == "player1")
-                m_score1 += 1;
-            else
-                m_score2 += 1;
+            var minusResult = m_score1 - m_score2;
+            
+            CheckIfPlayerHasWon(minusResult);
+            
+            if (minusResult == 1) score = "Advantage player1";
+            else if (minusResult == -1) score = "Advantage player2";
+            
+            else if (minusResult >= 2) score = "Win for player1";
+            else score = "Win for player2";
+
         }
-
-        public string GetScore()
+        else
         {
-            string score = "";
-            var tempScore = 0;
-            if (m_score1 == m_score2)
+            for (int i = 1; i < 3; i++)
             {
-                switch (m_score1)
+                if (i == 1)
+                {
+                    tempScore = m_score1;
+                }
+                else
+                {
+                    score += "-";
+                    tempScore = m_score2;
+                }
+
+                switch (tempScore)
                 {
                     case 0:
-                        score = "Love-All";
+                        score += "Love";
                         break;
                     case 1:
-                        score = "Fifteen-All";
+                        score += "Fifteen";
                         break;
                     case 2:
-                        score = "Thirty-All";
+                        score += "Thirty";
                         break;
-                    default:
-                        score = "Deuce";
+                    case 3:
+                        score += "Forty";
                         break;
-
                 }
             }
-            else if (m_score1 >= 4 || m_score2 >= 4)
-            {
-                var minusResult = m_score1 - m_score2;
-                if (minusResult == 1) score = "Advantage player1";
-                else if (minusResult == -1) score = "Advantage player2";
-                else if (minusResult >= 2) score = "Win for player1";
-                else score = "Win for player2";
-            }
-            else
-            {
-                for (var i = 1; i < 3; i++)
-                {
-                    if (i == 1) tempScore = m_score1;
-                    else { score += "-"; tempScore = m_score2; }
-                    switch (tempScore)
-                    {
-                        case 0:
-                            score += "Love";
-                            break;
-                        case 1:
-                            score += "Fifteen";
-                            break;
-                        case 2:
-                            score += "Thirty";
-                            break;
-                        case 3:
-                            score += "Forty";
-                            break;
-                    }
-                }
-            }
-            return score;
         }
+
+        return score;
+    }
+
+    private bool CheckIfPlayerHasWon(object minusResult)
+    {
+        
+        
+        
+        return 
+    }
+
+    private static string GetEqualScoreDescription(int score)
+    {
+        string scoreDescription = score switch
+        {
+            0 => "Love-All",
+            1 => "Fifteen-All",
+            2 => "Thirty-All",
+            _ => "Deuce"
+        };
+
+        return scoreDescription;
+    }
+
+    private Player? GetPlayerByName(string name)
+    {
+        return _players.FirstOrDefault(player => player.Name == name);
     }
 }
-
